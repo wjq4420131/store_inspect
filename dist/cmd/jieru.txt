@@ -1,0 +1,36 @@
+LANG=""
+
+
+echo ""
+
+echo "************************** memory ***********************"
+free -m
+echo ""
+
+echo "************************** disk space *******************"
+df -h
+echo ""
+
+echo "**************************** cpu ************************"
+vmstat
+echo ""
+
+echo "**************************** jieru jincheng************************"
+ps -ef|grep Acc
+echo ""
+
+echo "**************************** log ************************"
+
+pidfile=(`ps -A |grep "Acc"| awk '{print $1}'`)
+#echo $pidfile
+
+cwd_path=`ls -l /proc/${pidfile} | grep "cwd ->" | grep -v "grep" | awk '{print $NF}'`
+#echo $cwd_path
+
+du -h  $cwd_path/log_as4/*
+echo ""
+
+
+echo "**************************** core************************"
+ls -la $cwd_path
+echo ""
